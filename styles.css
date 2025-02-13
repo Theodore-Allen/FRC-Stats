@@ -1,24 +1,68 @@
 :root {
-    --bgColor: #1a0101;
-    --primary: #ecdfdf;
-    
+  --bgColor: rgb(24, 24, 24);
+  --primary: #ecdfdf;
 }
-*{
-    margin: 0;
-    padding:0;
+* {
+  margin: 0;
+  padding: 0;
 }
-body 
-{
-    background-color: var(--bgColor);
+body {
+  background-color: var(--bgColor);
 }
-header
-{
-    font-size: 1.4rem;
-    padding-top: 10px;
-    color: var(--primary);
-    text-align: center;
+header {
+  border-radius: 5px;
+
+  font-size: 1.4rem;
+  padding-top: 10px;
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 10px;
 }
-.var-container
-{
-    padding: 5px 0px;
+header h3 {
+  margin-top: -10px;
+}
+.var-container {
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 15px;
+  background-color: rgb(34, 34, 34);
+  margin: 0px 10px;
+  padding: 10px 5px;
+  border-radius: 10px;
+}
+#addDrop {
+  text-align: center;
+  padding: 0px 10px;
+  border-radius: 100%;
+  border: 0.5px solid black;
+  font-size: 30px;
+  background-color: rgb(61, 61, 61);
+  color: black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.37);
+  transition: ease-in-out all 0.3s;
+}
+#addDrop:hover {
+  background-color: rgb(83, 83, 83);
+}
+.var-container select {
+  text-align: center;
+  width: 100%;
+  padding: 10px 10px;
+  border-radius: 20px;
+  border: 0.5px solid black;
+  background-color: rgb(56, 55, 55);
+  color: var(--primary);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.37);
+}
+#team-container {
+  height: 100vh;
+}
+.dropdown-container {
+  display: flex;
+  padding-right: 5px;
+  gap: 10px;
+}
+.dropdown-container div {
+  max-width: 150px;
 }
