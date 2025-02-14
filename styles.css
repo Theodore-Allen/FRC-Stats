@@ -25,6 +25,7 @@ header {
   color: var(--textColor);
   text-align: center;
   margin-bottom: 10px;
+
 }
 
 header h3 {
@@ -32,6 +33,7 @@ header h3 {
 }
 
 .var-container {
+  z-index: 100;
   display: flex;
   align-items: center;
   position: sticky;
@@ -70,7 +72,7 @@ header h3 {
 }
 
 #team-container {
-  height: 100vh;
+
 }
 
 .dropdown-container {
@@ -84,22 +86,24 @@ header h3 {
 }
 
 .team-container {
-  padding: 5px;
+  padding: 15px;
 
   display: flex;
-  /* justify-content: center; */
-  flex-direction: column;
+  justify-content: center;
+  flex-direction: row;
   flex-wrap: wrap;
+gap: 10px;
 
-  row-gap: 190px;
+
 }
 
 .team-obj-container {
+  position:relative;
   color: var(--textColor);
   border-radius: 6px;
   box-shadow: 1px 1px 10px #1a1919;
 
-  min-width: 300px;
+  
   height: fit-content;
   background-color: var(--secondary);
 }
@@ -128,7 +132,8 @@ header h3 {
 
 .team-container .moreBtn {
   color: black;
-  background: linear-gradient(to right, blue, red);
+  /* background: linear-gradient(to right, blue, red); */
+  background-color: var(--action);
   border-radius: 2px;
   text-align: center;
 }
@@ -137,16 +142,14 @@ header h3 {
   padding: 5px 6px;
 }
 
-.team-container .extras {
-  transition: all ease-in-out 0.5s;
+.team-obj-container .extras {
   height: 0;
   overflow-y: hidden;
   color: rgb(209, 203, 203);
+  padding-bottom: 10px;
 }
 
-.team-container:hover .extras {
-  height: fit-content;
-}
+
 
 .container {
   display: flex;
@@ -156,20 +159,51 @@ header h3 {
 
 .cont-rounds {
   flex-direction: column;
-  justify-content: center;
+  height: 200px;
+  overflow-y: scroll;
 
   flex: 1;
+  gap: 4px;
   display: flex;
 }
 .round {
-  border: 2px solid;
+  transition: all ease-in-out 0.2s;
+ display:  flex;
+  align-items: center;
   padding: 10px 10px;
-  border-radius: 5px;
+
+ 
+  border-left: 8px solid white;
+}
+.round:hover
+{
+  background-color: var(--action);
+}
+.round::after
+{
+  content: "";
+  display: inline-block;      /* or block, depending on your layout needs */
+  width: 12px;                /* adjust to your SVG’s size */
+  height: 12px;
+  background: url("/darrow.svg") no-repeat center;
+  background-size: contain;   /* or cover, etc. */
+ 
+  margin-left: auto;
 }
 .cont-stats {
   flex: 1;
+
+  height: 200px;
+  overflow-y: scroll;
 }
+.cont-stats span
+{
+  color: rgba(255, 255, 255, 0.288);
+}
+
+ 
 .team-obj-container .container h2 {
   color: rgb(209, 203, 203);
   margin-bottom: 20px;
 }
+
