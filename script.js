@@ -1,4 +1,9 @@
 // Global Variables
+
+
+// this is all the data ik they re empty but, if you look at the code under the init commit this function make anyrequist needed before the app starts and saves them to these vars so you can use them in any function.
+
+
 let globolData = [];
 let SortedList = [];
 let selectElemts = document.getElementById('dropdown'); // will probaly be changed to a class soon
@@ -8,8 +13,7 @@ let dropDownContainer = document.getElementById('dropdown-container');
 let dropBtn = document.getElementById('addDrop');
 
 // API Keys
-const API_KEY =
-  'Dawg no api key bru'; // theodore nigga please dont clone the api key to the repo
+const API_KEY = 'Dawg no api key bru'; // theodore nigga please dont clone the api key to the repo
 
 // run
 async function app() {
@@ -123,10 +127,11 @@ function apiStatus() {
 // add the team rending
 // which js makes all the teams show up based off the filtered list '
 
+// and pls
+function renderTeams() {
 
-// and pls 
-function renderTeams() {}
+// takes all the 
 
 
 
-
+}
