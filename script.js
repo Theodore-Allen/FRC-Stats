@@ -9,7 +9,7 @@ let dropBtn = document.getElementById('addDrop');
 
 // API Keys
 const API_KEY =
-  'Ym1UYQf6f7egblFtsTNkieAVJWVhSYrnva9rHVArhtqBPSbjMdDKb2rTer8491go'; // theodore nigga please dont clone the api key to the repo
+  'Dawg no api key bru'; // theodore nigga please dont clone the api key to the repo
 
 // run
 async function app() {
