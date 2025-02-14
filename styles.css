@@ -1,6 +1,9 @@
 :root {
   --bgColor: rgb(24, 24, 24);
-  --primary: #ecdfdf;
+  --primary: rgb(34, 34, 34);
+  --secondary: #222222;
+  --textColor: rgb(248, 246, 246);
+  --action: #383737;
 }
 * {
   margin: 0;
@@ -14,7 +17,7 @@ header {
 
   font-size: 1.4rem;
   padding-top: 10px;
-  color: var(--primary);
+  color: var(--textColor);
   text-align: center;
   margin-bottom: 10px;
 }
@@ -43,7 +46,7 @@ header h3 {
   transition: ease-in-out all 0.3s;
 }
 #addDrop:hover {
-  background-color: rgb(83, 83, 83);
+  background-color: var(--action);
 }
 .var-container select {
   text-align: center;
@@ -51,8 +54,8 @@ header h3 {
   padding: 10px 10px;
   border-radius: 20px;
   border: 0.5px solid black;
-  background-color: rgb(56, 55, 55);
-  color: var(--primary);
+  background-color: var(--action);
+  color: var(--textColor);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.37);
 }
 #team-container {
@@ -66,3 +69,52 @@ header h3 {
 .dropdown-container div {
   max-width: 150px;
 }
+.team-container {
+  padding: 5px;
+
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  row-gap: 1px;
+}
+.team-obj-container {
+  margin: 0;
+  color: var(--textColor);
+  border-radius: 6px;
+  box-shadow: 1px 1px 10px black;
+  width: 300px;
+  height: fit-content;
+  background-color: var(--secondary);
+}
+.team-obj-container .name {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.team-obj-container .number {
+  font-size: 1rem;
+  font-weight: bold;
+  display: block;
+  color: rgba(255, 255, 255, 0.514);
+  letter-spacing: 3px;
+}
+.team-obj-container .score {
+  font-size: 1.5rem;
+  margin-left: auto;
+}
+.team-container .top {
+  display: flex;
+}
+.team-container .moreBtn {
+  color: black;
+  background: linear-gradient(to right, blue, red);
+  border-radius: 2px;
+  text-align: center;
+}
+.team-container .sep {
+  padding: 5px 6px;
+}
+.team-container .extras {
+  display: flex;
+}
+.team-container .extras
