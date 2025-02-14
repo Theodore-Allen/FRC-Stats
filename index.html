@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Frc Sorter</title>
     <script src="/script.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -13,7 +14,7 @@
       <h3>Sorter</h3>
     </header>
 
-    <div class="var-container">
+    <div class="var-container"> <!--dropdown navbar-->
       <div class="dropdown-container" id="dropdown-container">
         <div style="display: none">
           <select class="dropdown" id="dropdown">
@@ -27,7 +28,7 @@
       <button id="addDrop">+</button>
     </div>
 
-    <div id="team-container" class="team-container">
+    <div id="team-container" class="team-container"> <!--team containers-->
       <div class="team-obj-container">
         <div class="sep">
           <div>
@@ -36,48 +37,25 @@
               <span class="score">36</span>
             </div>
             <span class="number">987</span>
-          </div>
-          <!-- hiddon opj -->
-          <div class="extras">
-            <div class="rounds"></div>
-            <div class="avg"></div>
-          </div>
-        </div>
-        <div class="moreBtn"><img src="/darrow.svg" width="10px" alt="" /></div>
-      </div>
-      <div class="team-obj-container">
-        <div class="sep">
-          <div>
-            <div class="top">
-              <span class="name">High Rollers</span>
-              <span class="score">36</span>
+            <br><hr><br>
+            <div class="container">
+              <div class="cont-rounds"> <!--left side-->
+                <div class="container-container" alsign>Round 1</div><br>
+                <div class="container-container" alsign>Round 2</div><br>
+                <div class="container-container" alsign>Round 3</div><br>
+              </div>
+              <hr class="vertical-hr"> <!--right side-->
+              <div class="cont-stats">
+                <h2 style="bold">Average</h2>
+                <br>
+                <!-- hiddon opj -->
+                <p>N/A</p> <!--temporary-->
+                <div class="extras">
+                  <div class="rounds"></div>
+                  <div class="avg"></div>
+                </div>
+              </div>
             </div>
-            <span class="number">987</span>
-          </div>
-          <!-- hiddon opj -->
-          <div class="extras">
-            <div class="rounds"></div>
-            <div class="avg"></div>
-          </div>
-        </div>
-        <div class="moreBtn"><img src="/darrow.svg" width="10px" alt="" /></div>
-      </div>
-      <div class="team-obj-container">
-        <div class="sep">
-          <div>
-            <div class="top">
-              <span class="name">High Rollers</span>
-              <span class="score">36</span>
-            </div>
-            <span class="number">987</span>
-          </div>
-          <!-- hiddon opj -->
-          <div class="extras">
-            <div class="rounds"></div>
-            <div class="avg">
-              <span></span>
-            </div>
-          </div>
         </div>
         <div class="moreBtn"><img src="/darrow.svg" width="10px" alt="" /></div>
       </div>
