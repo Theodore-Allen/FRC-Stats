@@ -1,95 +1,90 @@
 // Global Variables
-
-
-// this is all the data ik they re empty but, if you look at the code under the init commit this function make anyrequist needed before the app starts and saves them to these vars so you can use them in any function.
-
-
-let globolData = [];
-let SortedList = [];
-let selectElemts = document.getElementById('dropdown'); // will probaly be changed to a class soon
-
-let teamcontainer = document.getElementById('team-container');
-let dropDownContainer = document.getElementById('dropdown-container');
-let dropBtn = document.getElementById('addDrop');
-
+let globalData = [];
+let sortedList = [];
+const selectElements = document.getElementById('dropdown'); // may be changed to a class soon
+const teamContainer = document.getElementById('team-container');
+const dropDownContainer = document.getElementById('dropdown-container');
+const dropBtn = document.getElementById('addDrop');
 
 // API Keys
 const API_KEY = 'Dawg no api key bru'; // theodore nigga please dont clone the api key to the repo
 
-// run
+// Main application function
 async function app() {
-
   const options = getAllVariables();
-options.forEach((e) => {
-    addOption(e);
+  options.forEach((option) => {
+    addOption(option);
   });
-  
-orginize()
- 
-  // sets up the boilerPlate EL
 
-  SortedList.forEach( e => {
-    createTeamCard(e, teamcontainer)
-  })
+  organize();
 
+  // Render team cards for each team in sortedList
+  sortedList.forEach((teamObj) => {
+    createTeamCard(teamObj, teamContainer);
+  });
 
-
-  // add event listener
+  // Add event listener for dropdown button
   dropBtn.addEventListener('click', () => {
     initDropDown();
   });
-
-
-
 }
 
-// Fetches the JSON
+// Fetch JSON data and then run the app
 fetch('/Data.json')
-  .then((e) => {
-    return e.json();
-  })
-  .then((e) => {
-    globolData = e;
+  .then((response) => response.json())
+  .then((data) => {
+    globalData = data;
     app();
   })
-  .catch((e) => {
-    console.error(`errEr data Not Loaded:${e} `);
+  .catch((error) => {
+    console.error(`Error: Data not loaded: ${error}`);
   });
 
-// Funcions
-function calculateAverage(teamNumber, variable) {
-  // Find the team number by matching the team number
-  const team = getTeam(teamNumber);
+// Functions
 
-  // takes all values of the specified variable across rounds
-  const values = team.rounds
-    .map((round) => parseFloat(round[variable]))
-    .filter((value) => !isNaN(value)); // Remove NaN values
+// calculateAverage safely handles non-numeric values
+function calculateAverage(teamNumber, variable) {
+  const team = getTeam(teamNumber);
+  if (!team) return null;
+
+  const values = [];
+  team.rounds.forEach((round) => {
+    let value = round[variable];
+    if (typeof value === 'number') {
+      values.push(value);
+    } else if (typeof value === 'string') {
+      const parsed = parseFloat(value);
+      if (!isNaN(parsed)) {
+        values.push(parsed);
+      }
+    }
+  });
 
   if (values.length === 0) {
-    console.error('No valid values found for', variable);
+    console.error(
+      `No valid numeric values for variable "${variable}" in team ${teamNumber}`
+    );
     return null;
   }
 
-  // Calculate the average
-  const sum = values.reduce((acc, val) => acc + val, 0);
+  const sum = values.reduce((acc, cur) => acc + cur, 0);
   return sum / values.length;
 }
 
+// Collect all unique variables from the dataset
 function getAllVariables() {
   const allVariables = new Set();
-
-  globolData.forEach((team) => {
+  globalData.forEach((team) => {
     team.rounds.forEach((round) => {
       Object.keys(round).forEach((key) => allVariables.add(key));
     });
   });
-
   return Array.from(allVariables);
 }
 
+// Retrieve a team object by its team number
 function getTeam(teamNumber) {
-  const team = globolData.find((team) => team.team === teamNumber);
+  const team = globalData.find((team) => team.team === teamNumber);
   if (!team) {
     console.error('Team not found');
     return null;
@@ -97,29 +92,30 @@ function getTeam(teamNumber) {
   return team;
 }
 
+// Add an option to the dropdown
 function addOption(optionName) {
-  let option = document.createElement('option');
+  const option = document.createElement('option');
   option.value = optionName;
   option.text = optionName;
-  selectElemts.appendChild(option);
+  selectElements.appendChild(option);
 }
 
+// Initialize a new dropdown element
 function initDropDown() {
-  let clone = selectElemts.cloneNode(true);
-  let div = document.createElement('div');
+  const clone = selectElements.cloneNode(true);
+  const div = document.createElement('div');
   clone.addEventListener('change', (e) => {
-    const target = e.target;
-    if (target.value == 0) return target.remove();
+    if (e.target.value == 0) {
+      e.target.remove();
+    }
   });
   div.appendChild(clone);
   dropDownContainer.appendChild(div);
 }
 
-// fetching outside data
-
+// Check API status from an external source
 function apiStatus() {
   const apiTestUrl = 'https://www.thebluealliance.com/api/v3/status';
-
   fetch(apiTestUrl, {
     method: 'GET',
     headers: {
@@ -132,174 +128,187 @@ function apiStatus() {
     .catch((error) => console.error('Error:', error));
 }
 
-// add the team rending
-// which js makes all the teams show up based off the filtered list '
-
-// and pls
-function renderTeams() {
-
-// takes all the 
-
-
-
-}
-function orginize()
-{
-  SortedList = globolData;
+// Organize data into sortedList (add sorting logic as needed)
+function organize() {
+  sortedList = globalData;
 }
 
+// Create a team card element with clickable rounds and an averages column.
+// The rounds column uses class "cont-rounds" and the averages column uses "cont-stats" so that they share equal space.
 function createTeamCard(teamObj, target) {
-  // Create the outer container for the team card and set its width to 300px.
-  const teamObjContainer = document.createElement("div");
-  teamObjContainer.className = "team-obj-container";
-  teamObjContainer.style.width = "300px";
-  
-  // Create a wrapper for the main content and the 'more' button.
-  const sep = document.createElement("div");
-  sep.className = "sep";
-  
-  // Main section (left side) containing team info and extras.
-  const mainDiv = document.createElement("div");
-  
-  // Create the top row (team name and total score).
-  const topRow = document.createElement("div");
-  topRow.className = "top";
-  
-  const nameSpan = document.createElement("span");
-  nameSpan.className = "name";
-  // Using teamObj.team for team name.
+  // Outer container for the team card
+  const teamObjContainer = document.createElement('div');
+  teamObjContainer.className = 'team-obj-container';
+
+  // Wrapper for main content and the "more" button
+  const sep = document.createElement('div');
+  sep.className = 'sep';
+
+  // Main section (team header and expandable extras)
+  const mainDiv = document.createElement('div');
+
+  // Top row with team name and total score
+  const topRow = document.createElement('div');
+  topRow.className = 'top';
+
+  const nameSpan = document.createElement('span');
+  nameSpan.className = 'name';
   nameSpan.textContent = teamObj.team;
-  
-  // Calculate total score from rounds.
+
+  // Calculate total score from rounds (using Score property)
   let totalScore = 0;
-  teamObj.rounds.forEach(round => {
+  teamObj.rounds.forEach((round) => {
     totalScore += Number(round.Score) || 0;
   });
-  
-  const scoreSpan = document.createElement("span");
-  scoreSpan.className = "score";
+  const scoreSpan = document.createElement('span');
+  scoreSpan.className = 'score';
   scoreSpan.textContent = totalScore;
-  
+
   topRow.appendChild(nameSpan);
   topRow.appendChild(scoreSpan);
-  
-  // Display the team number.
-  const numberSpan = document.createElement("span");
-  numberSpan.className = "number";
-  // Change to teamObj.teamNumber if necessary.
+
+  // Display the team number
+  const numberSpan = document.createElement('span');
+  numberSpan.className = 'number';
   numberSpan.textContent = teamObj.team;
-  
-  // Extras container (hidden/expanded on click).
-  const extras = document.createElement("div");
-  extras.className = "extras";
-  extras.appendChild(document.createElement("br"));
-  extras.appendChild(document.createElement("hr"));
-  extras.appendChild(document.createElement("br"));
-  
-  // Initially, collapse extras.
-  extras.style.height = "0";
-  extras.style.overflow = "hidden";
-  
-  // Create the container that holds the left (rounds) and right (stats) columns.
-  const container = document.createElement("div");
-  container.className = "container";
-  
-  // Left column: container for rounds.
-  const contRounds = document.createElement("div");
-  contRounds.className = "cont-rounds";
-  const roundsHeader = document.createElement("h2");
-  roundsHeader.textContent = "Rounds";
-  contRounds.appendChild(roundsHeader);
-  
-  // Right column: container for stats.
-  const contStats = document.createElement("div");
-  contStats.className = "cont-stats";
-  const statsHeader = document.createElement("h2");
-  statsHeader.textContent = "Stats";
-  contStats.appendChild(statsHeader);
-  
-  // Loop through each round in the team object.
-  teamObj.rounds.forEach(round => {
-    // Create and append a new round div in contRounds.
-    const roundDiv = document.createElement("div");
-    roundDiv.className = "round";
-    roundDiv.textContent = `Round ${round.round_number}`;
-    contRounds.appendChild(roundDiv);
-    
-    // Create a stats container for this round.
-    const roundStatsContainer = document.createElement("div");
-    roundStatsContainer.className = "round-stats";
-    
-    // Loop through every attribute in the round object.
+
+  // Extras container (hidden/expanded on clicking the "more" button)
+  const extras = document.createElement('div');
+  extras.className = 'extras';
+  extras.style.height = '0';
+  extras.style.overflow = 'hidden';
+
+  // Flex container for rounds and averages columns (CSS will handle the 1:1 layout)
+  const flexContainer = document.createElement('div');
+  flexContainer.className = 'container';
+
+  // Rounds Column (using same class as before: "cont-rounds")
+  const roundsColumn = document.createElement('div');
+  roundsColumn.className = 'cont-rounds';
+  const roundsHeader = document.createElement('h2');
+  roundsHeader.textContent = 'Rounds';
+  roundsColumn.appendChild(roundsHeader);
+
+  // For each round, create a clickable element
+  teamObj.rounds.forEach((round) => {
+    const roundDiv = document.createElement('div');
+    roundDiv.className = 'round';
+    roundDiv.style.cursor = 'pointer';
+
+    // Header for the round
+    const roundHeader = document.createElement('div');
+    roundHeader.textContent = `Round ${round.round_number}`;
+    roundHeader.style.fontWeight = 'bold';
+    roundDiv.appendChild(roundHeader);
+
+    // Hidden details for non-numeric data
+    const detailsContainer = document.createElement('div');
+    detailsContainer.className = 'round-details';
+    detailsContainer.style.display = 'none';
+    detailsContainer.style.marginTop = '5px';
+
+    // Loop through each property of the round
     for (let key in round) {
       if (round.hasOwnProperty(key)) {
-        // If the attribute is "scouts" (an array), loop through each scout.
-        if (key === "scouts" && Array.isArray(round[key])) {
+        if (key === 'round_number') continue;
+        if (key === 'scouts' && Array.isArray(round[key])) {
           round[key].forEach((scout, index) => {
-            const scoutStat = document.createElement("div");
-            scoutStat.appendChild(document.createTextNode(`Scout ${index + 1}: `));
-            const scoutSpan = document.createElement("span");
-            scoutSpan.textContent = scout.name;
-            scoutStat.appendChild(scoutSpan);
-            roundStatsContainer.appendChild(scoutStat);
+            const scoutDetail = document.createElement('div');
+            scoutDetail.textContent = `Scout ${index + 1}: ${scout.name}`;
+            detailsContainer.appendChild(scoutDetail);
           });
         } else {
-          // Create a new div for the stat in the format: key: <span>value</span>
-          const statItem = document.createElement("div");
-          statItem.appendChild(document.createTextNode(`${key}: `));
-          const statValue = document.createElement("span");
-          statValue.textContent = round[key];
-          statItem.appendChild(statValue);
-          roundStatsContainer.appendChild(statItem);
+          // Only display non-numeric details
+          let value = round[key];
+          let numeric = false;
+          if (typeof value === 'number') {
+            numeric = true;
+          } else if (typeof value === 'string') {
+            const parsed = parseFloat(value);
+            if (!isNaN(parsed)) {
+              numeric = true;
+            }
+          }
+          if (!numeric) {
+            const detailItem = document.createElement('div');
+            detailItem.textContent = `${key}: ${value}`;
+            detailsContainer.appendChild(detailItem);
+          }
         }
       }
     }
-    
-    // Append the stats container for this round to the overall stats column.
-    contStats.appendChild(roundStatsContainer);
+    roundDiv.appendChild(detailsContainer);
+
+    // Toggle details on clicking the round
+    roundDiv.addEventListener('click', () => {
+      detailsContainer.style.display =
+        detailsContainer.style.display === 'none' ? 'block' : 'none';
+    });
+
+    roundsColumn.appendChild(roundDiv);
   });
-  
-  // Append the rounds and stats columns into the container.
-  container.appendChild(contRounds);
-  container.appendChild(contStats);
-  
-  // Assemble the main section.
+
+  // Averages Column (use class "cont-stats" to match your existing CSS)
+  const avgColumn = document.createElement('div');
+  avgColumn.className = 'cont-stats';
+  const avgHeader = document.createElement('h2');
+  avgHeader.textContent = 'Averages';
+  avgColumn.appendChild(avgHeader);
+
+  // Gather all unique keys from the team's rounds and compute averages
+  const keys = new Set();
+  teamObj.rounds.forEach((round) => {
+    Object.keys(round).forEach((key) => keys.add(key));
+  });
+
+  keys.forEach((key) => {
+    const avg = calculateAverage(teamObj.team, key);
+    if (avg !== null) {
+      const avgDiv = document.createElement('div');
+      avgDiv.textContent = `${key}: ${avg.toFixed(2)}`;
+      avgColumn.appendChild(avgDiv);
+    }
+  });
+
+  // Append rounds and averages columns to the flex container
+  flexContainer.appendChild(roundsColumn);
+  flexContainer.appendChild(avgColumn);
+  extras.appendChild(flexContainer);
+
+  // Assemble the main team card section
   mainDiv.appendChild(topRow);
   mainDiv.appendChild(numberSpan);
   mainDiv.appendChild(extras);
-  extras.appendChild(container);
-  
-  // Create the right side "more" button.
-  const moreBtn = document.createElement("div");
-  moreBtn.className = "moreBtn";
-  const arrowImg = document.createElement("img");
-  arrowImg.src = "/darrow.svg";
+
+  // "More" button to toggle the extras drop-down for the whole team card
+  const moreBtn = document.createElement('div');
+  moreBtn.className = 'moreBtn';
+  moreBtn.style.cursor = 'pointer';
+  const arrowImg = document.createElement('img');
+  arrowImg.src = '/darrow.svg';
   arrowImg.width = 10;
-  arrowImg.alt = "";
+  arrowImg.alt = '';
   moreBtn.appendChild(arrowImg);
-  
-  // Add a click event to the "more" button to toggle extras height.
-  moreBtn.addEventListener("click", function() {
-    // Toggle between collapsed (0) and expanded ("fit-content")
-    if (extras.style.height === "fit-content" || extras.style.height === "auto") {
-      extras.style.height = "0";
+
+  moreBtn.addEventListener('click', () => {
+    if (
+      extras.style.height === 'fit-content' ||
+      extras.style.height === 'auto'
+    ) {
+      extras.style.height = '0';
+      teamObjContainer.style.width = '320px';
     } else {
-      extras.style.height = "fit-content";
-      teamObjContainer.width = "1000px"
+      extras.style.height = 'fit-content';
+      teamObjContainer.style.width = '100%';
     }
   });
-  
-  // Assemble the overall team card.
+
   sep.appendChild(mainDiv);
   sep.appendChild(moreBtn);
   teamObjContainer.appendChild(sep);
-  
-  // Append the card to the target container if provided.
+
   if (target) {
     target.appendChild(teamObjContainer);
   }
-  
   return teamObjContainer;
 }
-
-

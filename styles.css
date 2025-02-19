@@ -25,7 +25,6 @@ header {
   color: var(--textColor);
   text-align: center;
   margin-bottom: 10px;
-
 }
 
 header h3 {
@@ -72,7 +71,6 @@ header h3 {
 }
 
 #team-container {
-
 }
 
 .dropdown-container {
@@ -92,18 +90,16 @@ header h3 {
   justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
-gap: 10px;
-
-
+  gap: 10px;
 }
 
 .team-obj-container {
-  position:relative;
+  position: relative;
   color: var(--textColor);
   border-radius: 6px;
   box-shadow: 1px 1px 10px #1a1919;
 
-  
+  width: 320px;
   height: fit-content;
   background-color: var(--secondary);
 }
@@ -149,8 +145,6 @@ gap: 10px;
   padding-bottom: 10px;
 }
 
-
-
 .container {
   display: flex;
   gap: 30px;
@@ -168,26 +162,23 @@ gap: 10px;
 }
 .round {
   transition: all ease-in-out 0.2s;
- display:  flex;
+  display: flex;
   align-items: center;
   padding: 10px 10px;
 
- 
   border-left: 8px solid white;
 }
-.round:hover
-{
+.round:hover {
   background-color: var(--action);
 }
-.round::after
-{
-  content: "";
-  display: inline-block;      /* or block, depending on your layout needs */
-  width: 12px;                /* adjust to your SVG’s size */
+.round::after {
+  content: '';
+  display: inline-block; /* or block, depending on your layout needs */
+  width: 12px; /* adjust to your SVG’s size */
   height: 12px;
-  background: url("/darrow.svg") no-repeat center;
-  background-size: contain;   /* or cover, etc. */
- 
+  background: url('/darrow.svg') no-repeat center;
+  background-size: contain; /* or cover, etc. */
+
   margin-left: auto;
 }
 .cont-stats {
@@ -196,14 +187,11 @@ gap: 10px;
   height: 200px;
   overflow-y: scroll;
 }
-.cont-stats span
-{
+.cont-stats span {
   color: rgba(255, 255, 255, 0.288);
 }
 
- 
 .team-obj-container .container h2 {
   color: rgb(209, 203, 203);
   margin-bottom: 20px;
 }
-
